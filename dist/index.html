@@ -7,6 +7,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="popup-background"></div>
+
+    <div id="task-creator-screen">
+        <div id="task-creator-info">
+            <div>
+                Task:
+                <input type="text" id="task-title-input">
+            </div>
+
+            <div>
+                Deadline:
+                <input type="date" id="task-deadline-input">
+            </div>
+        </div>
+
+        <div id="task-creator-description">
+            Description
+            <textarea name="" id="task-descript-textarea" cols="30" rows="10"></textarea>
+        </div>
+
+        <div id="task-creator-btn-display">
+            <button id="add-btn">Add</button>
+            <button id="close-btn">Close</button>
+        </div>
+    </div>
+
     <header>
         <h1>Lucas's to-do Manager</h1>
         <div><a href="">GitHub</a></div>
@@ -14,24 +40,16 @@
     <div id="todo-container">
         <nav id="todo-panel">
             <ul>
-                <li>Dashboard</li>
-                <li>Projects</li>
-                <li>Ipsum</li>
-                <li>Vitae</li>
+                <li id="dashboard-btn">Dashboard</li>
+                <li id="projects-btn">Projects</li>
+                <li id="tasks-btn">Tasks</li>
             </ul>
         </nav>
 
         <div id="todo-display">
-            <span class="todo-card">
-                <div>
-                    Task:
-                    <h3>Brush my Tooth</h3>
-                </div>
-                <div class="todo-card-details">
-                    <div class="card-dealine">Deadline: 21/32/3213</div>
-                    <div class="card-details">Details</div>
-                </div>
-            </span>
+            <div id="tasks-button-panel">
+                <button id="add-task-btn">Add task</button>
+            </div>
         </div>
     </div>
 </body>
