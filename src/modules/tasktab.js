@@ -1,3 +1,9 @@
+let user = (function(){
+    let todoArray = []
+
+    return {todoArray}
+})()
+
 class Todo{
     constructor(task, description, deadline){
         this.task = task;
@@ -14,8 +20,6 @@ class Todo{
 }
 
 let tasktabDomManipulator = (function(){
-    let globaltest = []
-
     let taskCreatorScreen = document.querySelector("#task-creator-screen")
 
     let createDiv = function(){
@@ -34,7 +38,14 @@ let tasktabDomManipulator = (function(){
     let showTaskCreatorPopup = function(){
         backgroundPopup.style.display = "block"
         taskCreatorScreen.style.display = "flex"
+
+        let closeCardBtn = document.querySelector("#close-btn")
+        closeCardBtn.addEventListener("click", () => {
+            removeTaskCreatorPopup()
+        })
+
         let addCardBtn = document.querySelector("#add-btn")
+
         addCardBtn.addEventListener("click", () => {
             let task = document.querySelector("#task-title-input").value
             let deadline = document.querySelector("#task-deadline-input").value
@@ -42,8 +53,8 @@ let tasktabDomManipulator = (function(){
             if(description = ""){
                 description = "None"
             }
-            globaltest.push(new Todo(task, description, deadline))
-            console.log(globaltest)
+            user.todoArray.push(new Todo(task, description, deadline))
+            removeTaskCreatorPopup()
         })
     }
     
@@ -68,6 +79,7 @@ let tasktabDomManipulator = (function(){
         div.append(button)
         return div
     }
+
     let createTaskContainer = function(){
         let tasksContainer = document.createElement("div")
         tasksContainer.id = "tasks-container"
@@ -75,18 +87,19 @@ let tasktabDomManipulator = (function(){
         return tasksContainer
     }
     
-    let createTodoElement = function(){
+    let createTodoElement = function(task, deadline){
+        console.log(deadline)
         let todoCard = document.createElement("span")
         todoCard.classList.add("todo-card")
         
         let cardTask = createDiv()
         cardTask.classList.add("card-task")
-        cardTask.innerHTML = 'Task:<h3>Brush my Tooth</h3>'
+        cardTask.innerHTML = `Task:<h3>${task}</h3>`
         
         let todoCardDetails = createDiv()
         todoCardDetails.classList.add("todo-card-details")
         todoCardDetails.innerHTML = `
-        <div class="card-dealine"><strong>Deadline</strong>: 21/32/3213</div>
+        <div class="card-dealine"><strong>Deadline</strong>: ${deadline}</div>
         <div class="card-details-btn">Details</div>`
         
         todoCard.append(cardTask, todoCardDetails)
@@ -108,10 +121,9 @@ function initializeTaskTab(){
     let tasksContainer = tasktabDomManipulator.createTaskContainer()
     tasktab.append(tasksContainer)
 
-    // todosArray.forEach(todo => {
-    //     console.log(todo)
-    //     tasksContainer.append(tasktabDomManipulator.createTodoElement())
-    // })
+    user.todoArray.forEach(todo => {
+        tasksContainer.append(tasktabDomManipulator.createTodoElement(todo.task, todo.deadline))
+    })
 
 }
 
