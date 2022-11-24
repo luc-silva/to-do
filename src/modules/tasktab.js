@@ -1,4 +1,21 @@
+class Todo{
+    constructor(task, description, deadline){
+        this.task = task;
+        this.description = description;
+        this.deadline = deadline;
+    }
+    
+    get deadline(){
+        return this._deadline
+    }
+    set deadline(date) {
+        this._deadline = date;
+    }
+}
+
 let tasktabDomManipulator = (function(){
+    let globaltest = []
+
     let taskCreatorScreen = document.querySelector("#task-creator-screen")
 
     let createDiv = function(){
@@ -10,18 +27,24 @@ let tasktabDomManipulator = (function(){
 
     //Add task popups
     let backgroundPopup = document.querySelector("#popup-background")
-    let addTaskBtn = document.querySelector("#add-task-btn")
-
     backgroundPopup.addEventListener("click", () => {
         removeTaskCreatorPopup()
-    })
-    addTaskBtn.addEventListener("click", () => {
-        showTaskCreatorPopup()
     })
     
     let showTaskCreatorPopup = function(){
         backgroundPopup.style.display = "block"
         taskCreatorScreen.style.display = "flex"
+        let addCardBtn = document.querySelector("#add-btn")
+        addCardBtn.addEventListener("click", () => {
+            let task = document.querySelector("#task-title-input").value
+            let deadline = document.querySelector("#task-deadline-input").value
+            let description = document.querySelector("#task-descript-textarea").value
+            if(description = ""){
+                description = "None"
+            }
+            globaltest.push(new Todo(task, description, deadline))
+            console.log(globaltest)
+        })
     }
     
     let removeTaskCreatorPopup = function(){
@@ -74,6 +97,7 @@ let tasktabDomManipulator = (function(){
     return {createTodoElement, createTaskContainer, createTaskAddBtn}
 })()
 
+
 function initializeTaskTab(){
     let tasktab = document.querySelector("#todo-display")
     tasktab.textContent = ""
@@ -84,11 +108,10 @@ function initializeTaskTab(){
     let tasksContainer = tasktabDomManipulator.createTaskContainer()
     tasktab.append(tasksContainer)
 
-    let todosArray = [1, 2, 3, 4, 5, 6]
-    todosArray.forEach(todo => {
-        console.log(todo)
-        tasksContainer.append(tasktabDomManipulator.createTodoElement())
-    })
+    // todosArray.forEach(todo => {
+    //     console.log(todo)
+    //     tasksContainer.append(tasktabDomManipulator.createTodoElement())
+    // })
 
 }
 
