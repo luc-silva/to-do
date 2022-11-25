@@ -11,14 +11,14 @@
 
     <div id="task-creator-screen">
         <div id="task-creator-info">
-            <div>
+            <div id="task-title-input-div">
                 Task:
-                <input type="text" id="task-title-input" max="65">
+                <input type="text" id="task-title-input" max="65" required>
             </div>
 
-            <div>
+            <div id="task-deadline-input-div">
                 Deadline:
-                <input type="date" id="task-deadline-input">
+                <input type="date" id="task-deadline-input" required>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
         </div>
 
         <div id="task-creator-btn-display">
-            <button id="add-btn">Add</button>
+            <button type="submit" id="add-btn">Add</button>
             <button id="close-btn">Close</button>
         </div>
     </div>
