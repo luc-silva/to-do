@@ -19,6 +19,39 @@ class Todo {
 	}
 }
 
+const validateInput = function () {
+	let taskValue = document.querySelector("#task-title-input");
+	let deadlineValue = document.querySelector("#task-deadline-input");
+	let descriptionValue = document.querySelector("#task-description-textarea");
+
+	if (taskValue.value != "" && deadlineValue.value != "") {
+		if (descriptionValue.value == "") {
+			user.todoArray.push(
+				new Todo(taskValue.value, "None", deadlineValue.value)
+			);
+			console.log(taskValue.value.toString());
+		} else {
+			user.todoArray.push(
+				new Todo(
+					taskValue.value,
+					descriptionValue.value,
+					deadlineValue.value
+				)
+			);
+		}
+		console.log("ok");
+		tasktabDomManipulator.removeTaskCreatorPopup();
+	} else {
+		console.log("not ok");
+		tasktabDomManipulator.showRequiredFields();
+	}
+	
+	initializeTaskTab()
+	descriptionValue.value = "";
+	deadlineValue.value = "";
+	taskValue.value = "";
+};
+
 let tasktabDomManipulator = (function () {
 	let taskCreatorScreen = document.querySelector("#task-creator-screen");
 
@@ -36,46 +69,17 @@ let tasktabDomManipulator = (function () {
 	});
 
 	let showTaskCreatorPopup = function () {
+		let addCardBtn = document.querySelector("#add-btn");
+		let closeCardBtn = document.querySelector("#close-btn");
+
 		backgroundPopup.style.display = "block";
 		taskCreatorScreen.style.display = "flex";
 
-		let closeCardBtn = document.querySelector("#close-btn");
+		addCardBtn.addEventListener("click", validateInput);
+
 		closeCardBtn.addEventListener("click", () => {
 			removeTaskCreatorPopup();
-		});
-
-		let addCardBtn = document.querySelector("#add-btn");
-
-		addCardBtn.addEventListener("click", () => {
-			let taskValue = document.querySelector("#task-title-input");
-			let deadlineValue = document.querySelector("#task-deadline-input");
-			let descriptionValue = document.querySelector(
-				"#task-descript-textarea"
-			);
-
-			if (taskValue.value != "" && deadlineValue.value != "") {
-				if (descriptionValue == "") {
-					user.todoArray.push(
-						new Todo(taskValue.value, "None", deadlineValue.value)
-					);
-				} else {
-					user.todoArray.push(
-						new Todo(
-							taskValue.value,
-							descriptionValue.value,
-							deadlineValue.value
-						)
-					);
-				}
-
-				removeTaskCreatorPopup();
-			} else {
-				showRequiredFields();
-			}
-
-			descriptionValue.value = "";
-			deadlineValue.value = "";
-			taskValue.value = "";
+			addCardBtn.removeEventListener("click", validateInput);
 		});
 	};
 
@@ -121,7 +125,6 @@ let tasktabDomManipulator = (function () {
 	};
 
 	let createTodoElement = function (task, deadline) {
-		console.log(deadline);
 		let todoCard = document.createElement("span");
 		todoCard.classList.add("todo-card");
 
@@ -140,7 +143,13 @@ let tasktabDomManipulator = (function () {
 		return todoCard;
 	};
 
-	return { createTodoElement, createTaskContainer, createTaskAddBtn };
+	return {
+		createTodoElement,
+		createTaskContainer,
+		createTaskAddBtn,
+		removeTaskCreatorPopup,
+		showRequiredFields,
+	};
 })();
 
 function initializeTaskTab() {

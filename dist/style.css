@@ -91,7 +91,7 @@ body{
     flex-direction: column;
     height: 40%;
 }
-#task-descript-textarea{
+#task-description-textarea{
     width: 100%;
     resize: none;
     background-color: whitesmoke;
