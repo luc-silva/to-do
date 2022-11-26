@@ -5,17 +5,30 @@ let user = (function () {
 })();
 
 class Todo {
-	constructor(task, description, deadline) {
+	constructor(task, description, deadline, priority) {
 		this.task = task;
 		this.description = description;
 		this.deadline = deadline;
+		this.priority = priority;
+	}
+	dateCreated = new Date();
+
+	get dateCreated() {
+		return this._dateCreated;
+	}
+
+	get priority() {
+		return this._priority;
+	}
+	set priority(newPriority) {
+		this._priority = newPriority;
 	}
 
 	get deadline() {
 		return this._deadline;
 	}
-	set deadline(date) {
-		this._deadline = date;
+	set deadline(newDate) {
+		this._deadline = newDate;
 	}
 }
 
@@ -23,19 +36,25 @@ const validateInput = function () {
 	let taskValue = document.querySelector("#task-title-input");
 	let deadlineValue = document.querySelector("#task-deadline-input");
 	let descriptionValue = document.querySelector("#task-description-textarea");
+	let priorityValue = document.querySelector("#priority-input");
 
 	if (taskValue.value != "" && deadlineValue.value != "") {
 		if (descriptionValue.value == "") {
 			user.todoArray.push(
-				new Todo(taskValue.value, "None", deadlineValue.value)
+				new Todo(
+					taskValue.value,
+					"None",
+					deadlineValue.value,
+					priorityValue.value
+				)
 			);
-			console.log(taskValue.value.toString());
 		} else {
 			user.todoArray.push(
 				new Todo(
 					taskValue.value,
 					descriptionValue.value,
-					deadlineValue.value
+					deadlineValue.value,
+					priorityValue.value
 				)
 			);
 		}
@@ -45,8 +64,8 @@ const validateInput = function () {
 		console.log("not ok");
 		tasktabDomManipulator.showRequiredFields();
 	}
-	
-	initializeTaskTab()
+
+	initializeTaskTab();
 	descriptionValue.value = "";
 	deadlineValue.value = "";
 	taskValue.value = "";
@@ -135,13 +154,16 @@ let tasktabDomManipulator = (function () {
 		let todoCardDetails = createDiv();
 		todoCardDetails.classList.add("todo-card-details");
 		todoCardDetails.innerHTML = `
-        <div class="card-dealine"><strong>Deadline</strong>: ${deadline}</div>
-        <div class="card-details-btn">Details</div>`;
+        <div class="card-dealine"><strong>Deadline</strong>: ${deadline}</div>`;
 
 		todoCard.append(cardTask, todoCardDetails);
 
 		return todoCard;
 	};
+
+	let showTodoDetails = function(){
+		let todoDetailPopup = document.querySelector("#todo-detail-popup")
+	}
 
 	return {
 		createTodoElement,
@@ -166,6 +188,19 @@ function initializeTaskTab() {
 		tasksContainer.append(
 			tasktabDomManipulator.createTodoElement(todo.task, todo.deadline)
 		);
+	});
+
+	let todoCards = document.querySelectorAll(".todo-card");
+	todoCards.forEach((card) => {
+		card.addEventListener("click", (event) => {
+			let titleValue = event.target.querySelector("h3");
+
+			user.todoArray.forEach((todo) => {
+				if (todo.title == titleValue.textContent) {
+					//tasktabDomManipulator.showDetails();
+				}
+			});
+		});
 	});
 }
 
