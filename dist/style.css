@@ -209,3 +209,47 @@ button{
     gap: 8px;
     color: red;
 }
+
+.project-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 60vw;
+    box-sizing: content-box;
+    
+    padding: 1rem;
+    border-radius: 5px;
+
+    background-color: whitesmoke;
+}
+.project-name{
+    font-size: 1.7rem;
+}
+.project-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.project-details{
+    display: flex;
+    flex-direction: column;
+}
+.project-tasks-container{
+    display: flex;
+    flex-direction: column;
+}
+.project-task-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    gap: 8px;
+    margin-top: 8px;
+    padding: 0 1rem;
+}
+.project-task-maininfo{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+
+}

@@ -161,11 +161,11 @@ let tasktabDomManipulator = (function () {
 		if (check) {
 			cardTask.innerHTML = `
 			<div class="card-task-container">
-			<input type="checkbox" class="todo-checkbox" checked>
+				<input type="checkbox" class="todo-checkbox" checked>
 			
-			<div>
-			Task:<h3>${task}</h3>
-			</div>
+				<div>
+					Task:<h3>${task}</h3>
+				</div>
 			</div>
 			`;
 		} else {
