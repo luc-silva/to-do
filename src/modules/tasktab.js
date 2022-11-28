@@ -143,18 +143,36 @@ let tasktabDomManipulator = (function () {
 		return tasksContainer;
 	};
 
-	let createTodoElement = function (task, deadline) {
+	let createTodoElement = function (task, deadline, index) {
 		let todoCard = document.createElement("span");
 		todoCard.classList.add("todo-card");
+		todoCard.setAttribute("data-index", index);
 
 		let cardTask = createDiv();
 		cardTask.classList.add("card-task");
-		cardTask.innerHTML = `Task:<h3>${task}</h3>`;
+		cardTask.innerHTML = `
+		<div class="card-task-container">
+			<input type="checkbox" class="todo-checkbox">
+
+			<div>
+				Task:<h3>${task}</h3>
+			</div>
+		</div>
+		`;
 
 		let todoCardDetails = createDiv();
 		todoCardDetails.classList.add("todo-card-details");
 		todoCardDetails.innerHTML = `
-        <div class="card-dealine"><strong>Deadline</strong>: ${deadline}</div>`;
+        <div class="right-part">
+			<div class="card-dealine">
+				<strong>Deadline</strong>: ${deadline}
+			</div>
+
+			<div class="todo-delete-btn">
+				Delete
+			</div>
+		</div>
+		`;
 
 		todoCard.append(cardTask, todoCardDetails);
 
@@ -184,22 +202,38 @@ function initializeTaskTab() {
 	let tasksContainer = tasktabDomManipulator.createTaskContainer();
 	tasktab.append(tasksContainer);
 
-	user.todoArray.forEach((todo) => {
+	user.todoArray.forEach((todo, index) => {
 		tasksContainer.append(
-			tasktabDomManipulator.createTodoElement(todo.task, todo.deadline)
+			tasktabDomManipulator.createTodoElement(
+				todo.task,
+				todo.deadline,
+				index
+			)
 		);
 	});
 
 	let todoCards = document.querySelectorAll(".todo-card");
-	todoCards.forEach((card) => {
-		card.addEventListener("click", (event) => {
-			let titleValue = event.target.querySelector("h3");
 
-			user.todoArray.forEach((todo) => {
-				if (todo.title == titleValue.textContent) {
-					//tasktabDomManipulator.showDetails();
-				}
-			});
+	todoCards.forEach((card) => {
+		let todoCheckbox = card.querySelector(".todo-checkbox");
+
+		card.addEventListener("click", (event) => {
+			if (event.target.classList == "todo-delete-btn") {
+				let todoIndex = card.dataset.index;
+				let currentArray = user.todoArray;
+				let newArray = [];
+
+				currentArray.forEach((todo, index) => {
+					if (currentArray[index] != currentArray[todoIndex]) {
+						newArray.push(todo);
+					}
+				});
+				user.todoArray = [...newArray];
+			} else {
+				todoCheckbox.checked == true
+					? (todoCheckbox.checked = false)
+					: (todoCheckbox.checked = true);
+			}
 		});
 	});
 }
