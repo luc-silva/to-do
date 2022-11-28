@@ -1,13 +1,6 @@
 import initializeProjectTab from "./modules/project.js";
 import initializeTaskTab from "./modules/tasktab.js";
 
-let user = (function () {
-	let todoArray = [];
-	let projectArray = [];
-
-	return { todoArray };
-})();
-
 let todoPanel = (function () {
 	let dashboardBtn = document.querySelector("#dashboard-btn");
 
