@@ -5,16 +5,24 @@ let user = (function () {
 })();
 
 class Todo {
-	constructor(task, description, deadline, priority) {
+	constructor(task, description, deadline, priority, check) {
 		this.task = task;
 		this.description = description;
 		this.deadline = deadline;
 		this.priority = priority;
+		this.check = check;
 	}
 	dateCreated = new Date();
 
 	get dateCreated() {
 		return this._dateCreated;
+	}
+
+	get deadline() {
+		return this._deadline;
+	}
+	set deadline(newDate) {
+		this._deadline = newDate;
 	}
 
 	get priority() {
@@ -24,11 +32,11 @@ class Todo {
 		this._priority = newPriority;
 	}
 
-	get deadline() {
-		return this._deadline;
+	get check() {
+		return this._check;
 	}
-	set deadline(newDate) {
-		this._deadline = newDate;
+	set check(value) {
+		this._check = value;
 	}
 }
 
@@ -45,7 +53,8 @@ const validateInput = function () {
 					taskValue.value,
 					"None",
 					deadlineValue.value,
-					priorityValue.value
+					priorityValue.value,
+					false
 				)
 			);
 		} else {
@@ -54,14 +63,13 @@ const validateInput = function () {
 					taskValue.value,
 					descriptionValue.value,
 					deadlineValue.value,
-					priorityValue.value
+					priorityValue.value,
+					false
 				)
 			);
 		}
-		console.log("ok");
 		tasktabDomManipulator.removeTaskCreatorPopup();
 	} else {
-		console.log("not ok");
 		tasktabDomManipulator.showRequiredFields();
 	}
 
@@ -143,22 +151,34 @@ let tasktabDomManipulator = (function () {
 		return tasksContainer;
 	};
 
-	let createTodoElement = function (task, deadline, index) {
+	let createTodoElement = function (task, deadline, check, index) {
 		let todoCard = document.createElement("span");
 		todoCard.classList.add("todo-card");
 		todoCard.setAttribute("data-index", index);
 
 		let cardTask = createDiv();
 		cardTask.classList.add("card-task");
-		cardTask.innerHTML = `
-		<div class="card-task-container">
-			<input type="checkbox" class="todo-checkbox">
-
+		if (check) {
+			cardTask.innerHTML = `
+			<div class="card-task-container">
+			<input type="checkbox" class="todo-checkbox" checked>
+			
 			<div>
-				Task:<h3>${task}</h3>
+			Task:<h3>${task}</h3>
 			</div>
-		</div>
-		`;
+			</div>
+			`;
+		} else {
+			cardTask.innerHTML = `
+			<div class="card-task-container">
+				<input type="checkbox" class="todo-checkbox">
+	
+				<div>
+					Task:<h3>${task}</h3>
+				</div>
+			</div>
+			`;
+		}
 
 		let todoCardDetails = createDiv();
 		todoCardDetails.classList.add("todo-card-details");
@@ -177,10 +197,6 @@ let tasktabDomManipulator = (function () {
 		todoCard.append(cardTask, todoCardDetails);
 
 		return todoCard;
-	};
-
-	let showTodoDetails = function () {
-		let todoDetailPopup = document.querySelector("#todo-detail-popup");
 	};
 
 	return {
@@ -207,6 +223,7 @@ function initializeTaskTab() {
 			tasktabDomManipulator.createTodoElement(
 				todo.task,
 				todo.deadline,
+				todo.check,
 				index
 			)
 		);
@@ -218,8 +235,8 @@ function initializeTaskTab() {
 		let todoCheckbox = card.querySelector(".todo-checkbox");
 
 		card.addEventListener("click", (event) => {
+			let todoIndex = card.dataset.index;
 			if (event.target.classList == "todo-delete-btn") {
-				let todoIndex = card.dataset.index;
 				let currentArray = user.todoArray;
 				let newArray = [];
 
@@ -229,10 +246,18 @@ function initializeTaskTab() {
 					}
 				});
 				user.todoArray = [...newArray];
+				initializeTaskTab();
 			} else {
+
 				todoCheckbox.checked == true
 					? (todoCheckbox.checked = false)
 					: (todoCheckbox.checked = true);
+
+				console.log(todoCheckbox.checked)
+
+				if (user.todoArray[todoIndex].check != todoCheckbox.checked) {
+					user.todoArray[todoIndex].check = todoCheckbox.checked;
+				}
 			}
 		});
 	});
