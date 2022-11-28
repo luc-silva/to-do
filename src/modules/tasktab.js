@@ -1,8 +1,4 @@
-let user = (function () {
-	let todoArray = [];
-
-	return { todoArray };
-})();
+import user from "../index";
 
 class Todo {
 	constructor(task, description, deadline, priority, check) {
