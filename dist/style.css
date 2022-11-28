@@ -198,3 +198,14 @@ button{
     padding: 0.5rem 1rem;
     border-radius: 5px;
 }
+.card-task-container{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+.right-part{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    color: red;
+}
