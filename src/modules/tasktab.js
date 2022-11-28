@@ -161,9 +161,9 @@ let tasktabDomManipulator = (function () {
 		return todoCard;
 	};
 
-	let showTodoDetails = function(){
-		let todoDetailPopup = document.querySelector("#todo-detail-popup")
-	}
+	let showTodoDetails = function () {
+		let todoDetailPopup = document.querySelector("#todo-detail-popup");
+	};
 
 	return {
 		createTodoElement,
