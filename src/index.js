@@ -3,6 +3,7 @@ import initializeTaskTab from "./modules/tasktab.js";
 
 let user = (function () {
 	let todoArray = [];
+	let projectArray = [];
 
 	return { todoArray };
 })();
