@@ -211,7 +211,6 @@ let tasktabDomManipulator = (function () {
 function initializeTaskTab() {
 	let tasktab = document.querySelector("#todo-display");
 	tasktab.textContent = "";
-	//func para criar botoes
 
 	tasktab.append(tasktabDomManipulator.createTaskAddBtn());
 
@@ -248,12 +247,11 @@ function initializeTaskTab() {
 				user.todoArray = [...newArray];
 				initializeTaskTab();
 			} else {
-
 				todoCheckbox.checked == true
 					? (todoCheckbox.checked = false)
 					: (todoCheckbox.checked = true);
 
-				console.log(todoCheckbox.checked)
+				console.log(todoCheckbox.checked);
 
 				if (user.todoArray[todoIndex].check != todoCheckbox.checked) {
 					user.todoArray[todoIndex].check = todoCheckbox.checked;
