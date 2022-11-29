@@ -10,5 +10,3 @@ let todoPanel = (function () {
 	let tasksBtn = document.querySelector("#tasks-btn");
 	tasksBtn.addEventListener("click", initializeTaskTab);
 })();
-
-export default user;
