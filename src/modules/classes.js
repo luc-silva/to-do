@@ -63,4 +63,4 @@ class Todo {
 	}
 }
 
-export default { user, Project, ProjectTask, Todo };
+export { user, Project, ProjectTask, Todo };
