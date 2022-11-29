@@ -3,67 +3,112 @@ import { user, Project, ProjectTask } from "./classes.js";
 let projectTabDomManipulator = (function () {
 	let createDivElement = () => document.createElement("div");
 
-	let createStrongElement = () => document.createElement("strong");
+	let createStrongElement = (text = "") => {
+		let element = document.createElement("strong");
+		element.textContent = text;
+		return element;
+	};
 
-	function createProjectContainer() {
+	function hideProjectCreator(){
+		let projectCreator = document.querySelector("#project-creator");
+		projectCreator.style.display = "none";
+	}
+
+	function showProjectCreator() {
+		let projectCreator = document.querySelector("#project-creator");
+		projectCreator.style.display = "flex";
+
+		let backgroundPopup = document.querySelector("#popup-background");
+		backgroundPopup.style.display = "block"
+	}
+
+	let addProjectBtn = document.querySelector("#add-project-btn")
+	addProjectBtn.addEventListener("click", showProjectCreator)
+
+	function createProjectContainer(
+		projectTitle,
+		projectTasks,
+		projectDeadline,
+		projectDetails,
+		projectId
+	) {
 		let projectContainer = createDivElement();
-		projectContainer.id = "project-container";
+		projectContainer.classList.add("project-container");
+		projectContainer.setAttribute("data-project", projectId);
 
 		let projectNameElement = createDivElement();
 		projectNameElement.classList.add("project-name");
-		projectNameElement.textContent = `Project: <strong>Polar Hunting</strong>`;
+		projectNameElement.innerHTML = `Project: <strong>${projectTitle}</strong>`;
 
 		let projectInfoElement = createDivElement();
 		projectInfoElement.classList.add("project-info");
-		projectInfoElement.textContent = `                    
+		projectInfoElement.innerHTML = `                    
 		<div>
-			Tasks completed: <strong>1/30</strong>
+			Tasks completed: <strong>1/${projectTasks.length}</strong>
 		</div>
 		<div>
-			Deadline: <strong>12-32-4124</strong> (<em>45 days</em>)
+			Deadline: <strong>${projectDeadline}</strong> (<em>45 days</em>)
 		</div>`;
+
+		let holder = createDivElement();
+		holder.append(projectNameElement, projectInfoElement);
 
 		let projectDetailsElement = createDivElement();
 		projectDetailsElement.classList.add("project-details");
-		projectDetailsElement.textContent = `Lorem. `;
+		projectDetailsElement.innerHTML = `
+		<strong>Details:</strong> 
+		${projectDetails}
+		`;
 
 		//
 		let projectTasksElement = createDivElement();
 		projectTasksElement.classList.add("project-tasks");
-		projectTasksElement.append(
-			(createStrongElement().textContent = "text")
-		);
+		projectTasksElement.append(createStrongElement("Tasks:"));
 
 		let projectTasksContainer = createDivElement();
 		projectTasksContainer.classList.add("project-tasks-container");
 
-		//user.projectArray.projectTaskArray.foreEach((task, index )=>{
-		//projectTasksContainer.append(projectTasksCreator(task.title, task.priority, index))
-		//})
+		projectTasks.forEach((task) => {
+			projectTasksContainer.append(
+				projectTasksCreator(task.title, task.priority)
+			);
+		});
 
-		//
+		projectTasksElement.append(projectTasksContainer);
+
+		projectContainer.append(
+			holder,
+			projectDetailsElement,
+			projectTasksElement
+		);
+
+		return projectContainer;
 	}
-	function projectTasksCreator(task, priority, index) {
+
+	function projectTasksCreator(task, priority) {
 		let card = createDivElement();
 		card.classList.add("project-task-card");
-		card.setAttribute("data-project-index", index);
+		// card.setAttribute("data-project-index", index);
 
 		let mainInfoElement = createDivElement();
-		mainInfo.classList.add("project-task-maininfo");
-		mainInfoElement.textContent = `
+		mainInfoElement.classList.add("project-task-maininfo");
+		mainInfoElement.innerHTML = `
 		<input type="checkbox">
 		<div>
-			<strong>Task #${index + 1}:</strong>
+			<strong>#1:</strong>
 			<span>${task}</span>
 		</div>
 		`;
 
 		let taskPriorityElement = createDivElement();
 		taskPriorityElement.classList.add("project-task-priority");
-		taskPriorityElement.textContent = `
+		taskPriorityElement.innerHTML = `
 		<strong>Priority</strong>
 		<span>${priority}</span>
 		`;
+
+		card.append(mainInfoElement, taskPriorityElement);
+		return card;
 	}
 
 	return { createProjectContainer };
@@ -73,7 +118,17 @@ function initializeProjectTab() {
 	let projectTab = document.querySelector("#todo-display");
 	projectTab.textContent = "";
 
-	projectTab.append(projectTabDomManipulator.createProjectContainer());
+	user.projectArray.forEach((project) => {
+		projectTab.append(
+			projectTabDomManipulator.createProjectContainer(
+				project.title,
+				project.projectTasks,
+				project.deadline,
+				project.description,
+				project.projectId
+			)
+		);
+	});
 }
 
 export default initializeProjectTab;
