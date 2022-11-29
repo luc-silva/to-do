@@ -2,14 +2,33 @@ let user = (function () {
 	let todoArray = [];
 	let projectArray = [];
 
-	return { todoArray };
+	return { todoArray, projectArray };
 })();
 
 class Project {
-	constructor(title, description, dateCreated) {
+	constructor(title, projectTasks, deadline, description, dateCreated) {
 		this.title = title;
+		this.projectTasks = projectTasks;
+		this.deadline = deadline;
 		this.description = description;
 		this.dateCreated = new Date();
+		this.projectId = user.projectArray.length;
+	}
+
+	get title() {
+		return this._title;
+	}
+	get projectTasks() {
+		return this._projectTasks;
+	}
+	get deadline() {
+		return this._deadline;
+	}
+	get description() {
+		return this._description;
+	}
+	get projectId() {
+		return this._projectId;
 	}
 }
 
