@@ -19,7 +19,10 @@ let projectTabDomManipulator = (function () {
 	}
 
 	let createProjectBtn = document.querySelector("#create-project-btn");
-	let projectTaskAddBtn = document.querySelector("#project-taskcard-btn"); //mudar aq
+	let projectTaskAddBtn = document.querySelector("#project-taskcard-btn");
+
+	let addProjectBtn = document.querySelector("#add-project-btn");
+	addProjectBtn.addEventListener("click", showProjectCreator);
 
 	function hideProjectCreator() {
 		let projectCreator = document.querySelector("#project-creator");
@@ -58,6 +61,7 @@ let projectTabDomManipulator = (function () {
 				temporaryArray.push(
 					new ProjectTask(taskTitle.value, taskPriority.value)
 				);
+				renderProjectTasks(temporaryArray)
 			}
 		});
 
@@ -73,13 +77,28 @@ let projectTabDomManipulator = (function () {
 				);
 			}
 		});
+	}
+
+	function renderProjectTasks(array) {
 		let alreadyAddedTasksContainer = document.querySelector(
 			"#already-added-tasks"
 		);
+		alreadyAddedTasksContainer.textContent = ""
+		array.forEach((task, index) => {
+			let div = createDivElement();
+			div.setAttribute("data-Project-task-index", index);
+			div.innerHTML = `
+			<strong>${task.title}</strong>
+			<div class="project-taskcard-container">
+				<div>Priority: <strong>${task.priority}</strong></div>
+				<button class="project-taskcard-delete-btn">Delete</button>
+			</div>
+			`;
+			div.classList.add("already-added-taskcard")
+			alreadyAddedTasksContainer.append(div);
+		});
+		
 	}
-
-	let addProjectBtn = document.querySelector("#add-project-btn");
-	addProjectBtn.addEventListener("click", showProjectCreator);
 
 	//Structures
 	function createProjectContainer(
