@@ -9,22 +9,34 @@ let projectTabDomManipulator = (function () {
 		return element;
 	};
 
-	function hideProjectCreator(){
+	//popups
+	let backgroundPopup = document.querySelector("#popup-background");
+	backgroundPopup.addEventListener("click", removeBackgroundPopup);
+
+	function removeBackgroundPopup() {
+		backgroundPopup.style.display = "none";
+		hideProjectCreator();
+	}
+
+	let createProjectBtn = document.querySelector("#create-project-btn");
+
+	function hideProjectCreator() {
 		let projectCreator = document.querySelector("#project-creator");
 		projectCreator.style.display = "none";
+		createProjectBtn.removeEventListener("click", validateProjectInput);
 	}
 
 	function showProjectCreator() {
 		let projectCreator = document.querySelector("#project-creator");
 		projectCreator.style.display = "flex";
-
-		let backgroundPopup = document.querySelector("#popup-background");
-		backgroundPopup.style.display = "block"
+		backgroundPopup.style.display = "block";
+		createProjectBtn.addEventListener("click", validateProjectInput);
 	}
 
-	let addProjectBtn = document.querySelector("#add-project-btn")
-	addProjectBtn.addEventListener("click", showProjectCreator)
+	let addProjectBtn = document.querySelector("#add-project-btn");
+	addProjectBtn.addEventListener("click", showProjectCreator);
 
+	//Structures
 	function createProjectContainer(
 		projectTitle,
 		projectTasks,
@@ -113,6 +125,25 @@ let projectTabDomManipulator = (function () {
 
 	return { createProjectContainer };
 })();
+
+function validateProjectInput() {
+	console.log("hi");
+	let projectDescriptionInpt = document.querySelector(
+		"#project-description-textarea"
+	);
+	let projectDeadlineInpt = document.querySelector("#project-deadline-input");
+	let projectTitleInpt = document.querySelector("#project-title-input");
+
+	user.projectArray.push(
+		new Project(
+			projectTitleInpt.value,
+			[{ title: "teste", priority: "URGENT" }],
+			projectDeadlineInpt.value,
+			projectDescriptionInpt.value
+		)
+	);
+	console.log(user);
+}
 
 function initializeProjectTab() {
 	let projectTab = document.querySelector("#todo-display");
