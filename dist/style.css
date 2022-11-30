@@ -336,6 +336,7 @@ button{
     display: flex;
     flex-direction: column;
     gap: 8px;
+    overflow-y: scroll;
 
     margin-top: 1rem;
     padding: 8px 1rem;
@@ -348,8 +349,14 @@ button{
     justify-content: space-between;
     gap: 8px;
 }
+.project-taskcard-container{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
 .project-taskcard-delete-btn{
     color: red;
+    background-color: whitesmoke;
 }
 #already-added-tasks, #project-task-card-creator-inpt, #project-creator-descbox > textarea, #project-creator-titlebox > div > input{
     background-color: whitesmoke;
