@@ -52,18 +52,18 @@
         <div id="project-creator-titlebox">
             <div id="project-title-div">
                 Project Title:
-                <input type="text">
+                <input type="text" id="project-title-input">
             </div>
 
             <div id="project-deadline-div">
                 Deadline:
-                <input type="date">
+                <input type="date" id="project-deadline-input">
             </div>
         </div>
 
         <div id="project-creator-descbox">
             Description:
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea id="project-description-textarea"></textarea>
         </div>
 
         <div>
@@ -86,10 +86,9 @@
                 </div>
             </div>
             <div id="already-added-tasks">
-                You need a least one task to create a project.
             </div>
         </div>
-        <button>Create Project</button>
+        <button id="create-project-btn">Create Project</button>
     </div>
 
     <header>
@@ -107,50 +106,7 @@
         </nav>
 
         <div id="todo-display">
-            <div id="project-creator">
-                <h3>Create a new project</h3>
-                <div id="project-creator-titlebox">
-                    <div id="project-title-div">
-                        Project Title:
-                        <input type="text">
-                    </div>
 
-                    <div id="project-deadline-div">
-                        Deadline:
-                        <input type="date">
-                    </div>
-                </div>
-
-                <div id="project-creator-descbox">
-                    Description:
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
-                </div>
-
-                <div>
-                    <h3>Add tasks</h3>
-                    <div id="project-tasks-preview">
-                        <div class="project-taskcard-creator">
-                            <div class="card-input-area">
-                                <input type="text" placeholder="Task" id="project-task-card-creator-inpt">
-                                <div>
-                                    Priority
-                                    <select id="project-task-card-creator-select">
-                                        <option value="">a</option>
-                                        <option value="">b</option>
-                                        <option value="">c</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <button class="project-taskcard-btn">Add</button>
-                        </div>
-                    </div>
-                    <div id="already-added-tasks">
-                        You need a least one task to create a project.
-                    </div>
-                </div>
-                <button>Create Project</button>
-            </div>
         </div>
     </div>
 </body>

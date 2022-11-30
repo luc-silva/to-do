@@ -278,7 +278,7 @@ button{
     
         
     padding: 1rem;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 5px;
 }
 #project-creator-titlebox, #project-creator-deadlinebox{
@@ -336,12 +336,11 @@ button{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    text-align: center;
 
     margin-top: 1rem;
     padding: 8px 1rem;
-    background-color: white;
     border-radius: 5px;
+    height: 5rem;
 }
 .already-added-taskcard{
     display: flex;
@@ -351,4 +350,7 @@ button{
 }
 .project-taskcard-delete-btn{
     color: red;
+}
+#already-added-tasks, #project-task-card-creator-inpt, #project-creator-descbox > textarea, #project-creator-titlebox > div > input{
+    background-color: whitesmoke;
 }
