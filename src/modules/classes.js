@@ -14,22 +14,6 @@ class Project {
 		this.dateCreated = new Date();
 		this.projectId = user.projectArray.length;
 	}
-
-	get title() {
-		return this._title;
-	}
-	get projectTasks() {
-		return this._projectTasks;
-	}
-	get deadline() {
-		return this._deadline;
-	}
-	get description() {
-		return this._description;
-	}
-	get projectId() {
-		return this._projectId;
-	}
 }
 
 class ProjectTask {
@@ -41,8 +25,15 @@ class ProjectTask {
 	get title() {
 		return this._title;
 	}
+	set title(title) {
+		this._title = title;
+	}
+	
 	get priority() {
 		return this._priority;
+	}
+	set priority(priority) {
+		this._priority = priority;
 	}
 }
 
