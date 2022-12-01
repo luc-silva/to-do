@@ -215,6 +215,11 @@ button{
     color: red;
 }
 
+#project-display{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 .project-container{
     display: flex;
     flex-direction: column;
@@ -280,6 +285,9 @@ button{
     padding: 1rem;
     background-color: white;
     border-radius: 5px;
+}
+#project-button-panel{
+    width: 60vw;
 }
 #project-creator-titlebox, #project-creator-deadlinebox{
     display: flex;

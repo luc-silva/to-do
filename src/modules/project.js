@@ -34,13 +34,27 @@ let projectTabDomManipulator = (function () {
 	}
 
 	//
+	function clearProjectInputs() {
+		console.log(temporaryArray)
+		document.querySelector("#project-title-input").value = "";
+		document.querySelector("#project-deadline-input").value = "";
+		document.querySelector("#already-added-tasks").textContent = "";
+		document.querySelector("#project-description-textarea").value = "";
+		document.querySelector("#project-task-card-creator-inpt").value = "";
+		temporaryArray = [];
+	}
+
 	function createProjectTabAddButton() {
 		let addProject = document.createElement("button");
 		addProject.id = "add-project-btn";
 		addProject.addEventListener("click", showProjectCreator);
-		addProject.textContent = "Add Project"
+		addProject.textContent = "Add Project";
 
-		return addProject;
+		let projectBtnPanel = createDivElement();
+		projectBtnPanel.id = "project-button-panel";
+		projectBtnPanel.append(addProject);
+
+		return projectBtnPanel;
 	}
 
 	let temporaryArray = [];
@@ -48,6 +62,8 @@ let projectTabDomManipulator = (function () {
 		let projectCreator = document.querySelector("#project-creator");
 		projectCreator.style.display = "flex";
 		backgroundPopup.style.display = "block";
+
+		clearProjectInputs();
 
 		projectTaskAddBtn.addEventListener("click", validateProjectTasksInput);
 
@@ -204,7 +220,11 @@ let projectTabDomManipulator = (function () {
 			"#project-description-textarea"
 		).value;
 
-		if (projectDeadlineInpt != "" && projectTitleInpt != "") {
+		if (
+			projectDeadlineInpt != "" &&
+			projectTitleInpt != "" &&
+			temporaryArray.length > 0
+		) {
 			user.projectArray.push(
 				new Project(
 					projectTitleInpt,
