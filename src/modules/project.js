@@ -18,9 +18,6 @@ let projectTabDomManipulator = (function () {
 		hideProjectCreator();
 	}
 
-	let addProjectBtn = document.querySelector("#add-project-btn");
-	addProjectBtn.addEventListener("click", showProjectCreator);
-
 	let createProjectBtn = document.querySelector("#create-project-btn");
 	let projectTaskAddBtn = document.querySelector("#project-taskcard-btn");
 
@@ -34,6 +31,16 @@ let projectTabDomManipulator = (function () {
 			"click",
 			validateProjectTasksInput
 		);
+	}
+
+	//
+	function createProjectTabAddButton() {
+		let addProject = document.createElement("button");
+		addProject.id = "add-project-btn";
+		addProject.addEventListener("click", showProjectCreator);
+		addProject.textContent = "Add Project"
+
+		return addProject;
 	}
 
 	let temporaryArray = [];
@@ -57,7 +64,7 @@ let projectTabDomManipulator = (function () {
 
 		if (projectTaskTitleInput != "" && projectTaskDeadlineInput != "") {
 			temporaryArray.push(
-				new ProjectTask(taskTitle.value, taskPriority.value)
+				new ProjectTask(projectTaskTitleInput, projectTaskDeadlineInput)
 			);
 			renderProjectTasks(temporaryArray);
 		}
@@ -206,19 +213,30 @@ let projectTabDomManipulator = (function () {
 					projectDescriptionInpt
 				)
 			);
+			initializeProjectTab();
+			removeBackgroundPopup();
 		}
-		removeBackgroundPopup();
 	}
 
-	return { createProjectContainer };
+	return {
+		createProjectContainer,
+		createProjectTabAddButton,
+		createDivElement,
+	};
 })();
 
 function initializeProjectTab() {
 	let projectTab = document.querySelector("#todo-display");
 	projectTab.textContent = "";
 
+	let addProject = projectTabDomManipulator.createProjectTabAddButton();
+
+	let projectDisplay = projectTabDomManipulator.createDivElement();
+	projectDisplay.id = "project-display";
+	projectDisplay.textContent = "";
+
 	user.projectArray.forEach((project) => {
-		projectTab.append(
+		projectDisplay.append(
 			projectTabDomManipulator.createProjectContainer(
 				project.title,
 				project.projectTasks,
@@ -228,6 +246,8 @@ function initializeProjectTab() {
 			)
 		);
 	});
+
+	projectTab.append(addProject, projectDisplay);
 }
 
 export default initializeProjectTab;
