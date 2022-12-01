@@ -42,23 +42,25 @@ let projectTabDomManipulator = (function () {
 		projectCreator.style.display = "flex";
 		backgroundPopup.style.display = "block";
 
-		projectTaskAddBtn.addEventListener("click", () => {
-			if (validateProjectTasksInput()) {
-				let taskTitle = document.querySelector(
-					"#project-task-card-creator-inpt"
-				);
-				let taskPriority = document.querySelector(
-					"#project-task-card-creator-select"
-				);
-
-				temporaryArray.push(
-					new ProjectTask(taskTitle.value, taskPriority.value)
-				);
-				renderProjectTasks(temporaryArray);
-			}
-		});
+		projectTaskAddBtn.addEventListener("click", validateProjectTasksInput);
 
 		createProjectBtn.addEventListener("click", validateProjectInput);
+	}
+
+	function validateProjectTasksInput() {
+		let projectTaskTitleInput = document.querySelector(
+			"#project-task-card-creator-inpt"
+		).value;
+		let projectTaskDeadlineInput = document.querySelector(
+			"#project-task-card-creator-select"
+		).value;
+
+		if (projectTaskTitleInput != "" && projectTaskDeadlineInput != "") {
+			temporaryArray.push(
+				new ProjectTask(taskTitle.value, taskPriority.value)
+			);
+			renderProjectTasks(temporaryArray);
+		}
 	}
 
 	function renderProjectTasks(array) {
@@ -185,14 +187,16 @@ let projectTabDomManipulator = (function () {
 	}
 
 	function validateProjectInput() {
-		let projectTitleInpt = document.querySelector("#project-title-input").value;
+		let projectTitleInpt = document.querySelector(
+			"#project-title-input"
+		).value;
 		let projectDeadlineInpt = document.querySelector(
 			"#project-deadline-input"
 		).value;
 		let projectDescriptionInpt = document.querySelector(
 			"#project-description-textarea"
 		).value;
-	
+
 		if (projectDeadlineInpt != "" && projectTitleInpt != "") {
 			user.projectArray.push(
 				new Project(
@@ -208,20 +212,6 @@ let projectTabDomManipulator = (function () {
 
 	return { createProjectContainer };
 })();
-
-
-function validateProjectTasksInput() {
-	let projectTaskTitleInput = document.querySelector(
-		"#project-task-card-creator-inpt"
-	).value;
-	let projectTaskDeadlineInput = document.querySelector(
-		"#project-task-card-creator-select"
-	).value;
-
-	if (projectTaskTitleInput != "" && projectTaskDeadlineInput != "") {
-		return true;
-	}
-}
 
 function initializeProjectTab() {
 	let projectTab = document.querySelector("#todo-display");
