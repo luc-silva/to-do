@@ -18,37 +18,30 @@ let projectTabDomManipulator = (function () {
 		hideProjectCreator();
 	}
 
-	let createProjectBtn = document.querySelector("#create-project-btn");
-	let projectTaskAddBtn = document.querySelector("#project-taskcard-btn");
-
 	let addProjectBtn = document.querySelector("#add-project-btn");
 	addProjectBtn.addEventListener("click", showProjectCreator);
+
+	let createProjectBtn = document.querySelector("#create-project-btn");
+	let projectTaskAddBtn = document.querySelector("#project-taskcard-btn");
 
 	function hideProjectCreator() {
 		let projectCreator = document.querySelector("#project-creator");
 		projectCreator.style.display = "none";
 
 		createProjectBtn.removeEventListener("click", validateProjectInput);
+
 		projectTaskAddBtn.removeEventListener(
 			"click",
 			validateProjectTasksInput
 		);
 	}
 
+	let temporaryArray = [];
 	function showProjectCreator() {
 		let projectCreator = document.querySelector("#project-creator");
 		projectCreator.style.display = "flex";
 		backgroundPopup.style.display = "block";
 
-		let projectTitleInpt = document.querySelector("#project-title-input");
-		let projectDeadlineInpt = document.querySelector(
-			"#project-deadline-input"
-		);
-		let projectDescriptionInpt = document.querySelector(
-			"#project-description-textarea"
-		);
-
-		let temporaryArray = [];
 		projectTaskAddBtn.addEventListener("click", () => {
 			if (validateProjectTasksInput()) {
 				let taskTitle = document.querySelector(
@@ -61,32 +54,21 @@ let projectTabDomManipulator = (function () {
 				temporaryArray.push(
 					new ProjectTask(taskTitle.value, taskPriority.value)
 				);
-				renderProjectTasks(temporaryArray)
+				renderProjectTasks(temporaryArray);
 			}
 		});
 
-		createProjectBtn.addEventListener("click", () => {
-			if (validateProjectInput()) {
-				user.projectArray.push(
-					new Project(
-						projectTitleInpt.value,
-						[...temporaryArray],
-						projectDeadlineInpt.value,
-						projectDescriptionInpt.value
-					)
-				);
-			}
-		});
+		createProjectBtn.addEventListener("click", validateProjectInput);
 	}
 
 	function renderProjectTasks(array) {
 		let alreadyAddedTasksContainer = document.querySelector(
 			"#already-added-tasks"
 		);
-		alreadyAddedTasksContainer.textContent = ""
+		alreadyAddedTasksContainer.textContent = "";
 		array.forEach((task, index) => {
 			let div = createDivElement();
-			div.setAttribute("data-Project-task-index", index);
+			div.setAttribute("data-project-task-index", index);
 			div.innerHTML = `
 			<strong>${task.title}</strong>
 			<div class="project-taskcard-container">
@@ -94,10 +76,25 @@ let projectTabDomManipulator = (function () {
 				<button class="project-taskcard-delete-btn">Delete</button>
 			</div>
 			`;
-			div.classList.add("already-added-taskcard")
+			div.classList.add("already-added-taskcard");
+
+			div.addEventListener("click", (event) => {
+				if (event.target.classList == "project-taskcard-delete-btn") {
+					let newArray = [];
+					let cardIndex = div.dataset.projectTaskIndex;
+
+					temporaryArray.forEach((task) => {
+						if (task != temporaryArray[cardIndex]) {
+							newArray.push(task);
+						}
+					});
+					temporaryArray = [...newArray];
+				}
+				renderProjectTasks(temporaryArray);
+			});
+
 			alreadyAddedTasksContainer.append(div);
 		});
-		
 	}
 
 	//Structures
@@ -187,19 +184,31 @@ let projectTabDomManipulator = (function () {
 		return card;
 	}
 
+	function validateProjectInput() {
+		let projectTitleInpt = document.querySelector("#project-title-input").value;
+		let projectDeadlineInpt = document.querySelector(
+			"#project-deadline-input"
+		).value;
+		let projectDescriptionInpt = document.querySelector(
+			"#project-description-textarea"
+		).value;
+	
+		if (projectDeadlineInpt != "" && projectTitleInpt != "") {
+			user.projectArray.push(
+				new Project(
+					projectTitleInpt,
+					[...temporaryArray],
+					projectDeadlineInpt,
+					projectDescriptionInpt
+				)
+			);
+		}
+		removeBackgroundPopup();
+	}
+
 	return { createProjectContainer };
 })();
 
-function validateProjectInput() {
-	let projectDeadlineInpt = document.querySelector(
-		"#project-deadline-input"
-	).value;
-	let projectTitleInpt = document.querySelector("#project-title-input").value;
-
-	if (projectDeadlineInpt != "" && projectTitleInpt != "") {
-		return true;
-	}
-}
 
 function validateProjectTasksInput() {
 	let projectTaskTitleInput = document.querySelector(
