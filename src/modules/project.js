@@ -145,10 +145,10 @@ let projectTabDomManipulator = (function () {
 		projectInfoElement.classList.add("project-info");
 		projectInfoElement.innerHTML = `                    
 		<div>
-			Tasks completed: <strong>1/${projectTasks.length}</strong>
+			Tasks completed: <strong>${user.completedTasks(projectId)}/${projectTasks.length}</strong>
 		</div>
 		<div>
-			Deadline: <strong>${projectDeadline}</strong> (<em>45 days</em>)
+			Deadline: <strong>${projectDeadline}</strong>
 		</div>`;
 
 		let holder = createDivElement();
@@ -307,6 +307,7 @@ function initializeProjectTab() {
 						cardIndex
 					].checked = true;
 				}
+				initializeProjectTab()
 			});
 		});
 	});

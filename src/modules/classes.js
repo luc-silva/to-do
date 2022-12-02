@@ -1,8 +1,18 @@
 let user = (function () {
 	let todoArray = [];
 	let projectArray = [];
+	function completedTasks(index) {
+		let tasks = projectArray[index].projectTasks;
+		let total = 0
+		tasks.forEach((task) => {
+			if(task.checked){
+				total++
+			}
+		});
+		return total
+	}
 
-	return { todoArray, projectArray };
+	return { todoArray, projectArray, completedTasks };
 })();
 
 class Project {
