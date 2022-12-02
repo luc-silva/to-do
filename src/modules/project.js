@@ -35,7 +35,6 @@ let projectTabDomManipulator = (function () {
 
 	//
 	function clearProjectInputs() {
-		console.log(temporaryArray)
 		document.querySelector("#project-title-input").value = "";
 		document.querySelector("#project-deadline-input").value = "";
 		document.querySelector("#already-added-tasks").textContent = "";
@@ -80,7 +79,11 @@ let projectTabDomManipulator = (function () {
 
 		if (projectTaskTitleInput != "" && projectTaskDeadlineInput != "") {
 			temporaryArray.push(
-				new ProjectTask(projectTaskTitleInput, projectTaskDeadlineInput)
+				new ProjectTask(
+					projectTaskTitleInput,
+					projectTaskDeadlineInput,
+					false
+				)
 			);
 			renderProjectTasks(temporaryArray);
 		}
@@ -166,9 +169,14 @@ let projectTabDomManipulator = (function () {
 		let projectTasksContainer = createDivElement();
 		projectTasksContainer.classList.add("project-tasks-container");
 
-		projectTasks.forEach((task) => {
+		projectTasks.forEach((task, index) => {
 			projectTasksContainer.append(
-				projectTasksCreator(task.title, task.priority)
+				projectTasksCreator(
+					task.title,
+					task.priority,
+					task.checked,
+					index
+				)
 			);
 		});
 
@@ -183,20 +191,30 @@ let projectTabDomManipulator = (function () {
 		return projectContainer;
 	}
 
-	function projectTasksCreator(task, priority) {
+	function projectTasksCreator(task, priority, checked, index) {
 		let card = createDivElement();
 		card.classList.add("project-task-card");
-		// card.setAttribute("data-project-index", index);
+		card.setAttribute("data-project-task-index", index);
 
 		let mainInfoElement = createDivElement();
 		mainInfoElement.classList.add("project-task-maininfo");
-		mainInfoElement.innerHTML = `
-		<input type="checkbox">
-		<div>
-			<strong>#1:</strong>
-			<span>${task}</span>
-		</div>
-		`;
+		if (checked) {
+			mainInfoElement.innerHTML = `
+			<input type="checkbox" checked>
+			<div>
+				<strong>#1:</strong>
+				<span>${task}</span>
+			</div>
+			`;
+		} else {
+			mainInfoElement.innerHTML = `
+			<input type="checkbox">
+			<div>
+				<strong>#1:</strong>
+				<span>${task}</span>
+			</div>
+			`;
+		}
 
 		let taskPriorityElement = createDivElement();
 		taskPriorityElement.classList.add("project-task-priority");
@@ -268,6 +286,30 @@ function initializeProjectTab() {
 	});
 
 	projectTab.append(addProject, projectDisplay);
+
+	let projects = document.querySelectorAll(".project-container");
+	projects.forEach((project) => {
+		let thisProject = project.dataset.project;
+		let taskCard = project.querySelectorAll(".project-task-card");
+		taskCard.forEach((card) => {
+			card.addEventListener("click", () => {
+				let cardIndex = card.dataset.projectTaskIndex;;
+
+				let checkbox = card.querySelector("input[type='checkbox']");
+				if (checkbox.checked == true) {
+					checkbox.checked = false;
+					user.projectArray[thisProject].projectTasks[
+						cardIndex
+					].checked = false;
+				} else {
+					checkbox.checked = true;
+					user.projectArray[thisProject].projectTasks[
+						cardIndex
+					].checked = true;
+				}
+			});
+		});
+	});
 }
 
 export default initializeProjectTab;
