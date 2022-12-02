@@ -17,9 +17,17 @@ class Project {
 }
 
 class ProjectTask {
-	constructor(title, priority) {
+	constructor(title, priority, checked) {
 		this.title = title;
 		this.priority = priority;
+		this.checked = checked;
+	}
+
+	get checked() {
+		return this._checked;
+	}
+	set checked(value) {
+		this._checked = value;
 	}
 
 	get title() {
@@ -28,7 +36,7 @@ class ProjectTask {
 	set title(title) {
 		this._title = title;
 	}
-	
+
 	get priority() {
 		return this._priority;
 	}
