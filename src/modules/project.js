@@ -131,7 +131,8 @@ let projectTabDomManipulator = (function () {
 		projectTasks,
 		projectDeadline,
 		projectDetails,
-		projectId
+		projectId,
+		projectStatus
 	) {
 		let projectContainer = createDivElement();
 		projectContainer.classList.add("project-container");
@@ -145,10 +146,12 @@ let projectTabDomManipulator = (function () {
 		projectInfoElement.classList.add("project-info");
 		projectInfoElement.innerHTML = `                    
 		<div>
-			Tasks completed: <strong>${user.completedTasks(projectId)}/${projectTasks.length}</strong>
+			Tasks completed: <strong>${user.completedTasks(projectId)}/${
+			projectTasks.length
+		}</strong>
 		</div>
 		<div>
-			Deadline: <strong>${projectDeadline}</strong>
+			Deadline: <strong>${projectDeadline}</strong> Status: <strong>${projectStatus}</strong>
 		</div>`;
 
 		let holder = createDivElement();
@@ -280,7 +283,8 @@ function initializeProjectTab() {
 				project.projectTasks,
 				project.deadline,
 				project.description,
-				project.projectId
+				project.projectId,
+				project.status
 			)
 		);
 	});
@@ -293,7 +297,7 @@ function initializeProjectTab() {
 		let taskCard = project.querySelectorAll(".project-task-card");
 		taskCard.forEach((card) => {
 			card.addEventListener("click", () => {
-				let cardIndex = card.dataset.projectTaskIndex;;
+				let cardIndex = card.dataset.projectTaskIndex;
 
 				let checkbox = card.querySelector("input[type='checkbox']");
 				if (checkbox.checked == true) {
@@ -307,7 +311,7 @@ function initializeProjectTab() {
 						cardIndex
 					].checked = true;
 				}
-				initializeProjectTab()
+				initializeProjectTab();
 			});
 		});
 	});
