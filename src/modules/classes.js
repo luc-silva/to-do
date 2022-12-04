@@ -1,28 +1,39 @@
 let user = (function () {
 	let todoArray = [];
 	let projectArray = [];
+
 	function completedTasks(index) {
 		let tasks = projectArray[index].projectTasks;
-		let total = 0
+		let total = 0;
 		tasks.forEach((task) => {
-			if(task.checked){
-				total++
+			if (task.checked) {
+				total++;
 			}
 		});
-		return total
+		return total;
 	}
 
-	return { todoArray, projectArray, completedTasks };
+	function completedProjects() {
+		let total = 0;
+		projectArray.forEach((project) => {
+			if (project.status == "Completed") {
+				total++;
+			}
+		});
+		return total;
+	}
+	return { todoArray, projectArray, completedTasks, completedProjects };
 })();
 
 class Project {
-	constructor(title, projectTasks, deadline, description, dateCreated) {
+	constructor(title, projectTasks, deadline, description) {
 		this.title = title;
 		this.projectTasks = projectTasks;
 		this.deadline = deadline;
 		this.description = description;
 		this.dateCreated = new Date();
 		this.projectId = user.projectArray.length;
+		this.status = "Unfinished";
 	}
 }
 
