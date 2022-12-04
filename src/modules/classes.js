@@ -12,6 +12,15 @@ let user = (function () {
 		});
 		return total;
 	}
+	function completedTodo() {
+		let total = 0;
+		todoArray.forEach((todo) => {
+			if (todo.check) {
+				total++;
+			}
+		});
+		return total;
+	}
 
 	function completedProjects() {
 		let total = 0;
