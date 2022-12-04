@@ -31,6 +31,29 @@ body{
     z-index: 0;
 }
 
+#dashboard-display{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 60vw;
+}
+#dashboard-status-display{
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+.completed-value-container{
+    display: flex;
+    flex-direction: row;
+}
+.completed-value{
+    font-size: 6rem;
+}
+.total-value{
+    align-self: flex-end;
+    line-height: 3rem;
+}
+
 #popup-background{
     display: none;
     background-color: rgba(0, 0, 0, 0.628);
