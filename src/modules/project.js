@@ -78,7 +78,11 @@ let projectTabDomManipulator = (function () {
 			"#project-task-card-creator-select"
 		).value;
 
-		if (projectTaskTitleInput != "" && projectTaskDeadlineInput != "") {
+		if (
+			projectTaskTitleInput != "" &&
+			projectTaskDeadlineInput != "" &&
+			!checkDuplicated(temporaryArray, projectTaskTitleInput)
+		) {
 			temporaryArray.push(
 				new ProjectTask(
 					projectTaskTitleInput,
@@ -231,6 +235,16 @@ let projectTabDomManipulator = (function () {
 		return card;
 	}
 
+	function checkDuplicated(array, value) {
+		let duplicated = false;
+		array.forEach((item) => {
+			if (item.title == value) {
+				duplicated = true;
+			}
+		});
+		return duplicated;
+	}
+
 	function validateProjectInput() {
 		let projectTitleInpt = document.querySelector(
 			"#project-title-input"
@@ -245,7 +259,8 @@ let projectTabDomManipulator = (function () {
 		if (
 			projectDeadlineInpt != "" &&
 			projectTitleInpt != "" &&
-			temporaryArray.length > 0
+			temporaryArray.length > 0 &&
+			!checkDuplicated(user.projectArray, projectTitleInpt)
 		) {
 			user.projectArray.push(
 				new Project(
@@ -287,11 +302,11 @@ function initializeProjectTab() {
 	dashboardBtns.forEach((button) => {
 		button.style.backgroundColor = "whitesmoke";
 		button.style.padding = "0.5rem 2rem";
-		button.style.color = "rgb(50, 50, 50)"
+		button.style.color = "rgb(50, 50, 50)";
 	});
 	thisTabBtn.style.backgroundColor = "white";
 	thisTabBtn.style.padding = "0.5rem 3rem";
-	thisTabBtn.style.color = "rgb(100, 175, 225)"
+	thisTabBtn.style.color = "rgb(100, 175, 225)";
 
 	let projectTab = document.querySelector("#todo-display");
 	projectTab.textContent = "";

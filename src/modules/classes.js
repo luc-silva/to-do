@@ -83,8 +83,8 @@ class ProjectTask {
 }
 
 class Todo {
-	constructor(task, description, deadline, priority, check) {
-		this.task = task;
+	constructor(title, description, deadline, priority, check) {
+		this.title = title;
 		this.description = description;
 		this.deadline = deadline;
 		this.priority = priority;

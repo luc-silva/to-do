@@ -1,12 +1,26 @@
 import { user, Todo } from "./classes.js";
 
+function checkDuplicated(array, value) {
+	let duplicated = false;
+	array.forEach((item) => {
+		if (item.title == value) {
+			duplicated = true;
+		}
+	});
+	return duplicated;
+}
+
 const validateInput = function () {
 	let taskValue = document.querySelector("#task-title-input");
 	let deadlineValue = document.querySelector("#task-deadline-input");
 	let descriptionValue = document.querySelector("#task-description-textarea");
 	let priorityValue = document.querySelector("#priority-input");
 
-	if (taskValue.value != "" && deadlineValue.value != "") {
+	if (
+		taskValue.value != "" &&
+		deadlineValue.value != "" &&
+		!checkDuplicated(user.todoArray, taskValue.value)
+	) {
 		if (descriptionValue.value == "") {
 			user.todoArray.push(
 				new Todo(
@@ -176,11 +190,11 @@ function initializeTaskTab() {
 	dashboardBtns.forEach((button) => {
 		button.style.backgroundColor = "whitesmoke";
 		button.style.padding = "0.5rem 2rem";
-		button.style.color = "rgb(50, 50, 50)"
+		button.style.color = "rgb(50, 50, 50)";
 	});
 	thisTabBtn.style.backgroundColor = "white";
 	thisTabBtn.style.padding = "0.5rem 3rem";
-	thisTabBtn.style.color = "rgb(100, 175, 225)"
+	thisTabBtn.style.color = "rgb(100, 175, 225)";
 
 	let tasktab = document.querySelector("#todo-display");
 	tasktab.textContent = "";
@@ -193,7 +207,7 @@ function initializeTaskTab() {
 	user.todoArray.forEach((todo, index) => {
 		tasksContainer.append(
 			tasktabDomManipulator.createTodoElement(
-				todo.task,
+				todo.title,
 				todo.deadline,
 				todo.check,
 				index
