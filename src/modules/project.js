@@ -266,6 +266,19 @@ let projectTabDomManipulator = (function () {
 	};
 })();
 
+function checkTaskStatus(project) {
+	let projectTasks = user.projectArray[project].projectTasks;
+	let total = 0;
+	projectTasks.forEach((task) => {
+		if (task.checked) {
+			total++;
+		}
+	});
+	if (total == projectTasks.length) {
+		user.projectArray[project].status = "Completed";
+	}
+}
+
 function initializeProjectTab() {
 	let projectTab = document.querySelector("#todo-display");
 	projectTab.textContent = "";
@@ -311,6 +324,7 @@ function initializeProjectTab() {
 						cardIndex
 					].checked = true;
 				}
+				checkTaskStatus(thisProject);
 				initializeProjectTab();
 			});
 		});
