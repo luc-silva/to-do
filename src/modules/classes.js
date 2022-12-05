@@ -31,7 +31,14 @@ let user = (function () {
 		});
 		return total;
 	}
-	return { todoArray, projectArray, completedTasks, completedProjects };
+
+	return {
+		todoArray,
+		projectArray,
+		completedTasks,
+		completedProjects,
+		completedTodo
+	};
 })();
 
 class Project {
