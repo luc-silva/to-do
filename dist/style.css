@@ -7,12 +7,20 @@
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(50, 50, 50);
 }
-@keyframes showCard {
+@keyframes fade-in {
     0% {
         opacity: 0;
     }
     100% {
         opacity: 1;
+    }
+}
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }
 
@@ -70,6 +78,33 @@ body{
     line-height: 3rem;
 }
 
+#error-popup{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    animation-name: fade-in;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+
+    position: fixed;
+    z-index: 3;
+    bottom: 0;
+    height: 10vh;
+    width: 100%;
+
+    background-color: rgb(245, 108, 108);
+}
+#error-container > strong{
+    color: rgb(254, 240, 240);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+#error-container > p{
+    color: rgb(253, 226, 226);
+}
+
 #popup-background{
     display: none;
     width: 100vw;
@@ -80,7 +115,7 @@ body{
     position: fixed;
     z-index: 1;
 
-    animation-name: showCard;
+    animation-name: fade-in;
     animation-duration: 0.8s;
     animation-fill-mode: forwards;
 }
@@ -325,7 +360,7 @@ button{
     top: 50%;
     left: 50%;
     
-    animation-name: showCard;
+    animation-name: fade-in;
     animation-duration: 0.8s;
     animation-fill-mode: forwards;
 
@@ -423,7 +458,7 @@ button{
 }
 
 .reveal-animation{
-    animation-name: showCard;
+    animation-name: fade-in;
     animation-duration: 0.8s;
     animation-fill-mode: forwards;
 

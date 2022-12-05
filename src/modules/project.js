@@ -15,6 +15,7 @@ let projectTabDomManipulator = (function () {
 
 	function removeBackgroundPopup() {
 		backgroundPopup.style.display = "none";
+		document.querySelector("#error-popup").style.display = "none";
 		hideProjectCreator();
 	}
 
@@ -272,6 +273,12 @@ let projectTabDomManipulator = (function () {
 			);
 			initializeProjectTab();
 			removeBackgroundPopup();
+		} else {
+			showErrorPopup();
+		}
+
+		function showErrorPopup() {
+			document.querySelector("#error-popup").style.display = "flex";
 		}
 	}
 

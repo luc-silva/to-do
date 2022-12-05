@@ -44,7 +44,7 @@ const validateInput = function () {
 		}
 		tasktabDomManipulator.removeTaskCreatorPopup();
 	} else {
-		tasktabDomManipulator.showRequiredFields();
+		tasktabDomManipulator.showErrorPopup();
 	}
 
 	initializeTaskTab();
@@ -84,22 +84,14 @@ let tasktabDomManipulator = (function () {
 		});
 	};
 
-	let removeTaskCreatorPopup = function () {
+	function removeTaskCreatorPopup() {
+		document.querySelector("#error-popup").style.display = "none"
 		backgroundPopup.style.display = "none";
 		taskCreatorScreen.style.display = "none";
-	};
-	let showRequiredFields = function () {
-		let deadlineInputDiv = document.querySelector("#task-deadline-input");
-		let taskInputDiv = document.querySelector("#task-title-input");
-
-		taskInputDiv.style.backgroundColor = "rgb(245, 213, 213)";
-		taskInputDiv.style.outline = "red solid 1px";
-		taskInputDiv.style.color = "red";
-
-		deadlineInputDiv.style.backgroundColor = "rgb(245, 213, 213)";
-		deadlineInputDiv.style.outline = "red solid 1px";
-		deadlineInputDiv.style.color = "red";
-	};
+	}
+	function showErrorPopup() {
+		document.querySelector("#error-popup").style.display = "flex";
+	}
 
 	//structure functions
 	let createTaskAddBtn = function () {
@@ -179,7 +171,7 @@ let tasktabDomManipulator = (function () {
 		createTaskContainer,
 		createTaskAddBtn,
 		removeTaskCreatorPopup,
-		showRequiredFields,
+		showErrorPopup,
 	};
 })();
 
