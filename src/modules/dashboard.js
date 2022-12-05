@@ -1,3 +1,5 @@
+import { user } from "./classes.js";
+
 let dashboardTabDomManipuladtor = (function () {
 	let createDivElement = () => document.createElement("div");
 
@@ -19,8 +21,8 @@ let dashboardTabDomManipuladtor = (function () {
 		completedTaskDisplay.innerHTML = `                     
         Tasks Completed:
         <div class="completed-value-container">
-            <div class="completed-value">40</div>
-            <div class="total-value">of 42</div>
+            <div class="completed-value">${user.completedTodo()}</div>
+            <div class="total-value">of ${user.todoArray.length}</div>
         </div>`;
 
 		let completedProjectDisplay = createDivElement();
@@ -28,8 +30,8 @@ let dashboardTabDomManipuladtor = (function () {
 		completedProjectDisplay.innerHTML = `
         Project Completed:
         <div class="completed-value-container">
-            <div class="completed-value">40</div>
-            <div class="total-value">of 42</div>
+            <div class="completed-value">${user.completedProjects()}</div>
+            <div class="total-value">of ${user.projectArray.length}</div>
         </div>`;
 
 		dashboardStatusDisplay.append(
