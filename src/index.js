@@ -3,6 +3,9 @@ import initializeProjectTab from "./modules/project.js";
 import initializeTaskTab from "./modules/tasktab.js";
 
 let todoPanel = (function () {
+
+	initializeDashboard()
+
 	let dashboardBtn = document.querySelector("#dashboard-btn");
 	dashboardBtn.addEventListener("click", initializeDashboard)
 
