@@ -47,6 +47,18 @@ let dashboardTabDomManipuladtor = (function () {
 })();
 
 function initializeDashboard() {
+	let dashboardBtns = document.querySelectorAll(".dashboard-button");
+	let thisTabBtn = document.querySelector("#dashboard-btn");
+
+	dashboardBtns.forEach((button) => {
+		button.style.backgroundColor = "whitesmoke";
+		button.style.padding = "0.5rem 2rem";
+		button.style.color = "rgb(50, 50, 50)"
+	});
+	thisTabBtn.style.backgroundColor = "white";
+	thisTabBtn.style.padding = "0.5rem 3rem";
+	thisTabBtn.style.color = "rgb(100, 175, 225)"
+
 	let dashboardTab = document.querySelector("#todo-display");
 	dashboardTab.textContent = "";
 

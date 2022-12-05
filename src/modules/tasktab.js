@@ -94,7 +94,8 @@ let tasktabDomManipulator = (function () {
 
 		let button = createBtn();
 		button.id = "add-task-btn";
-		button.textContent = "Add task";
+		button.textContent = "Add Task";
+		button.classList.add("action-button");
 
 		button.addEventListener("click", () => {
 			showTaskCreatorPopup();
@@ -113,7 +114,7 @@ let tasktabDomManipulator = (function () {
 
 	let createTodoElement = function (task, deadline, check, index) {
 		let todoCard = document.createElement("span");
-		todoCard.classList.add("todo-card");
+		todoCard.classList.add("todo-card", "reveal-animation");
 		todoCard.setAttribute("data-index", index);
 
 		let cardTask = createDiv();
@@ -169,6 +170,18 @@ let tasktabDomManipulator = (function () {
 })();
 
 function initializeTaskTab() {
+	let dashboardBtns = document.querySelectorAll(".dashboard-button");
+	let thisTabBtn = document.querySelector("#tasks-btn");
+
+	dashboardBtns.forEach((button) => {
+		button.style.backgroundColor = "whitesmoke";
+		button.style.padding = "0.5rem 2rem";
+		button.style.color = "rgb(50, 50, 50)"
+	});
+	thisTabBtn.style.backgroundColor = "white";
+	thisTabBtn.style.padding = "0.5rem 3rem";
+	thisTabBtn.style.color = "rgb(100, 175, 225)"
+
 	let tasktab = document.querySelector("#todo-display");
 	tasktab.textContent = "";
 

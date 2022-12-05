@@ -45,9 +45,10 @@ let projectTabDomManipulator = (function () {
 
 	function createProjectTabAddButton() {
 		let addProject = document.createElement("button");
-		addProject.id = "add-project-btn";
 		addProject.addEventListener("click", showProjectCreator);
+		addProject.id = "add-project-btn";
 		addProject.textContent = "Add Project";
+		addProject.classList.add("action-button");
 
 		let projectBtnPanel = createDivElement();
 		projectBtnPanel.id = "project-button-panel";
@@ -104,7 +105,7 @@ let projectTabDomManipulator = (function () {
 				<button class="project-taskcard-delete-btn">Delete</button>
 			</div>
 			`;
-			div.classList.add("already-added-taskcard");
+			div.classList.add("already-added-taskcard", "reveal-animation");
 
 			div.addEventListener("click", (event) => {
 				if (event.target.classList == "project-taskcard-delete-btn") {
@@ -135,7 +136,7 @@ let projectTabDomManipulator = (function () {
 		projectStatus
 	) {
 		let projectContainer = createDivElement();
-		projectContainer.classList.add("project-container");
+		projectContainer.classList.add("project-container", "reveal-animation");
 		projectContainer.setAttribute("data-project", projectId);
 
 		let projectNameElement = createDivElement();
@@ -280,6 +281,18 @@ function checkTaskStatus(project) {
 }
 
 function initializeProjectTab() {
+	let dashboardBtns = document.querySelectorAll(".dashboard-button");
+	let thisTabBtn = document.querySelector("#projects-btn");
+
+	dashboardBtns.forEach((button) => {
+		button.style.backgroundColor = "whitesmoke";
+		button.style.padding = "0.5rem 2rem";
+		button.style.color = "rgb(50, 50, 50)"
+	});
+	thisTabBtn.style.backgroundColor = "white";
+	thisTabBtn.style.padding = "0.5rem 3rem";
+	thisTabBtn.style.color = "rgb(100, 175, 225)"
+
 	let projectTab = document.querySelector("#todo-display");
 	projectTab.textContent = "";
 
